@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Resonar | Audio Podcast Gear Management & Analytics Studio</title>
+    <meta name="description"
+        content="Premium electronics web shop for podcasting and studio gear. Discover microphones, interfaces, and headphones with 360° views and deep analytics.">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Resonar Studio",
+      "description": "Premium electronics web shop for podcasting and studio gear.",
+      "image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=1200",
+      "priceRange": "$$"
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header / Nav -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+
+            <button class="mobile-toggle" aria-label="Open menu">
+                <i class="ph ph-list"></i>
+            </button>
+
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count"
+                            style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="waveform-container">
+                <!-- CSS Waveform generated bars -->
+                <div class="bar" style="animation-delay: 0.1s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.6s"></div>
+                <div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.7s"></div>
+                <div class="bar" style="animation-delay: 0.5s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.8s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+            </div>
+            <div class="container hero-content">
+                <h1 class="hero-title">Precision Audio for the Modern Creator.</h1>
+                <p class="hero-subtitle">High-fidelity podcast gear, deep studio analytics, and expert compatibility
+                    matching. Built for broadcast perfection.</p>
+                <div class="hero-actions">
+                    <a href="shop.html" class="btn btn-primary">Shop Gear</a>
+                    <a href="guides.html" class="btn btn-secondary">Read the Guides</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Gear -->
+        <section class="container">
+            <header class="section-header">
+                <h2>Featured Studio Equipment</h2>
+                <p>Curated microphones, interfaces, and monitors that define the standard of clarity.</p>
+            </header>
+
+            <div class="featured-grid">
+
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=600"
+                        alt="Studio Condenser Microphone" class="card-img" loading="lazy">
+                    <div class="badge badge-primary">Best Seller</div>
+                    <h3 class="card-title">Aether M-1 Condenser</h3>
+                    <p class="price tabular">$299.00</p>
+                    <a href="product-detail.html" class="btn btn-secondary" style="width: 100%;">View Details</a>
+                </div>
+
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1640756883978-e9b6ddc8f91f?auto=format&fit=crop&q=80&w=600"
+                        alt="Audio Interface" class="card-img" loading="lazy">
+                    <h3 class="card-title">Synapse Core Interface</h3>
+                    <p class="price tabular">$189.00</p>
+                    <a href="product-detail.html" class="btn btn-secondary" style="width: 100%;">View Details</a>
+                </div>
+
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=600"
+                        alt="Studio Headphones" class="card-img" loading="lazy">
+                    <h3 class="card-title">Void 7X Reference Cans</h3>
+                    <p class="price tabular">$249.00</p>
+                    <a href="product-detail.html" class="btn btn-secondary" style="width: 100%;">View Details</a>
+                </div>
+
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=600"
+                        alt="Podcast Mixer" class="card-img" loading="lazy">
+                    <h3 class="card-title">Nexus 4-Channel Desk</h3>
+                    <p class="price tabular">$499.00</p>
+                    <a href="product-detail.html" class="btn btn-secondary" style="width: 100%;">View Details</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Feature Highlights -->
+        <section class="container"
+            style="background-color: rgba(255,255,255,0.02); border-radius: var(--radius); border: 1px solid var(--bg-tertiary); margin-top: var(--space-8); padding: var(--space-6);">
+            <header class="section-header">
+                <h2>The Resonar Advantage</h2>
+                <p>We don't just sell gear. We provide the tools to make informed decisions for your studio.</p>
+            </header>
+
+            <div class="featured-grid" style="gap: var(--space-5); text-align: center;">
+                <div>
+                    <i class="ph ph-cube"
+                        style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3>Interactive 360° Views</h3>
+                    <p>Inspect every angle, port, and dial before you buy. True-to-life visualization.</p>
+                </div>
+                <div>
+                    <i class="ph ph-faders"
+                        style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3>Deep Spec Comparisons</h3>
+                    <p>Put up to 4 items head-to-head. Compare frequency response, impedance, and more.</p>
+                </div>
+                <div>
+                    <i class="ph ph-book-open"
+                        style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3>Expert Guides</h3>
+                    <p>Confused by ANC terminology? Our interactive guides match you to the perfect gear.</p>
+                </div>
+                <div>
+                    <i class="ph ph-shield-check"
+                        style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3>Instant Warranty</h3>
+                    <p>Register your serial number immediately online and manage it from your dashboard.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology -->
+        <section class="container" style="margin-top: var(--space-8);">
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: center;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h2>How We Test Audio Gear</h2>
+                    <p style="margin-top: var(--space-3); margin-bottom: var(--space-4);">We believe in objective truth
+                        in audio. Every microphone and interface is tested in our acoustically treated A-B studio. We
+                        measure frequency response, noise floor, and real-world podcast applicability.</p>
+                    <a href="about.html" class="btn btn-secondary">Read Our Methodology</a>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=800&h=600"
+                        alt="Studio microphone and headphones in front of audio analysis software"
+                        style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--bg-tertiary);"
+                        loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="container testimonials">
+            <header class="section-header">
+                <div class="badge badge-primary" style="margin-bottom: var(--space-3);">Testimonials</div>
+                <h2>Trusted by Creators</h2>
+                <p>Podcasters, producers, and streamers on why they build their studios with Resonar.</p>
+            </header>
+
+            <div class="grid-3">
+                <figure class="testimonial-card">
+                    <i class="ph-fill ph-quotes testimonial-quote-icon" aria-hidden="true"></i>
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i></div>
+                    <blockquote>The spec comparison tool saved me from buying the wrong mic. I ended up with the Echo
+                        V-Dynamic and my room noise basically vanished.</blockquote>
+                    <figcaption class="testimonial-author">
+                        <img class="testimonial-avatar"
+                            src="https://images.unsplash.com/photo-1593697909683-bccb1b9e68a4?auto=format&fit=crop&crop=faces&w=96&h=96&q=80"
+                            alt="" width="48" height="48" loading="lazy">
+                        <span>
+                            <strong>Maya Reyes</strong>
+                            <small>Host, The Late Edit</small>
+                        </span>
+                    </figcaption>
+                </figure>
+
+                <figure class="testimonial-card">
+                    <i class="ph-fill ph-quotes testimonial-quote-icon" aria-hidden="true"></i>
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i></div>
+                    <blockquote>Finally a gear shop that shows real frequency graphs instead of marketing fluff. The
+                        Synapse interface was set up in ten minutes.</blockquote>
+                    <figcaption class="testimonial-author">
+                        <img class="testimonial-avatar"
+                            src="https://images.unsplash.com/photo-1581547848331-0aba76655842?auto=format&fit=crop&crop=faces&w=96&h=96&q=80"
+                            alt="" width="48" height="48" loading="lazy">
+                        <span>
+                            <strong>Daniel Kim</strong>
+                            <small>Home studio producer</small>
+                        </span>
+                    </figcaption>
+                </figure>
+
+                <figure class="testimonial-card">
+                    <i class="ph-fill ph-quotes testimonial-quote-icon" aria-hidden="true"></i>
+                    <div class="testimonial-stars" aria-label="Rated 4 out of 5"><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star star-off"></i></div>
+                    <blockquote>Registering my warranty took under a minute, and support answered my setup question the
+                        same afternoon. Seriously impressive service.</blockquote>
+                    <figcaption class="testimonial-author">
+                        <img class="testimonial-avatar"
+                            src="https://images.unsplash.com/photo-1655947717064-d856af599bd1?auto=format&fit=crop&crop=faces&w=96&h=96&q=80"
+                            alt="" width="48" height="48" loading="lazy">
+                        <span>
+                            <strong>Amara Okafor</strong>
+                            <small>Video creator & streamer</small>
+                        </span>
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="container" style="margin-top: var(--space-9); margin-bottom: var(--space-8);">
+            <div class="cta-banner">
+                <h2 class="cta-item">Ready to Upgrade Your Sound?</h2>
+                <p class="cta-item">Join thousands of podcasters and creators who trust Resonar.</p>
+                <a href="register.html" class="btn btn-primary cta-item cta-btn">Create an Account</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <!-- GA_TAG -->
+</body>
+
+</html>

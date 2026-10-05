@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Shop | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+        
+        .shop-sidebar {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-5);
+            height: fit-content;
+            position: sticky;
+            top: calc(var(--nav-height) + var(--space-4));
+        }
+
+        .filter-group {
+            margin-bottom: var(--space-5);
+        }
+
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-group h4 {
+            margin-bottom: var(--space-3);
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+            flex-wrap: wrap;
+            gap: var(--space-3);
+        }
+
+        .sort-select {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--bg-tertiary);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: var(--space-4);
+        }
+
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: var(--space-8) 0;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+        }
+
+        /* Collapsible filters: toggle only shows at 768px and below */
+        .filter-toggle {
+            display: none;
+        }
+
+        .filter-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 6px;
+            border-radius: 999px;
+            background-color: var(--color-primary);
+            color: var(--bg-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .filter-count[hidden] {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .shop-layout {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+
+            .shop-sidebar {
+                position: static;
+                padding: 0;
+            }
+
+            .filter-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: var(--space-3) var(--space-4);
+                min-height: 52px;
+                color: var(--text-primary);
+                font-family: var(--font-heading);
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .filter-toggle-label {
+                display: inline-flex;
+                align-items: center;
+                gap: var(--space-2);
+            }
+
+            .filter-toggle-label > i {
+                color: var(--color-primary);
+                font-size: 1.25rem;
+            }
+
+            .filter-caret {
+                color: var(--text-secondary);
+                transition: transform 0.3s ease;
+            }
+
+            .filter-toggle[aria-expanded="true"] .filter-caret {
+                transform: rotate(180deg);
+            }
+
+            /* Animate height with the 0fr -> 1fr grid trick */
+            .filter-body {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 0.3s ease;
+            }
+
+            .filter-inner {
+                overflow: hidden;
+                padding: 0 var(--space-4);
+                visibility: hidden;
+                transition: visibility 0.3s;
+            }
+
+            .shop-sidebar.filters-open .filter-body {
+                grid-template-rows: 1fr;
+            }
+
+            .shop-sidebar.filters-open .filter-inner {
+                visibility: visible;
+                padding-top: var(--space-2);
+                padding-bottom: var(--space-4);
+                border-top: 1px solid var(--bg-tertiary);
+            }
+
+            .shop-sidebar.filters-open .filter-inner .filter-group:first-child {
+                margin-top: var(--space-3);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .filter-body, .filter-caret, .filter-inner {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link active">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+        
+        <section class="container page-hero">
+            <div class="badge badge-primary">Shop</div>
+            <h1>Studio Equipment</h1>
+            <p>Microphones, interfaces, headphones, and mixers. Every item is verified by our studio engineers.</p>
+        </section>
+
+        <div class="container shop-layout">
+            
+            <aside class="shop-sidebar">
+                <button type="button" class="filter-toggle" id="filter-toggle" aria-expanded="false" aria-controls="filter-body">
+                    <span class="filter-toggle-label"><i class="ph ph-sliders-horizontal"></i> Filters <span class="filter-count" id="filter-count" hidden>0</span></span>
+                    <i class="ph ph-caret-down filter-caret"></i>
+                </button>
+
+                <div class="filter-body" id="filter-body">
+                <div class="filter-inner">
+                <div class="filter-group">
+                    <h4>Category</h4>
+                    <div class="checkbox-group"><input type="checkbox" id="cat-mic" value="microphones" class="filter-cb"><label for="cat-mic">Microphones</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="cat-int" value="interfaces" class="filter-cb"><label for="cat-int">Interfaces</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="cat-head" value="headphones" class="filter-cb"><label for="cat-head">Headphones</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="cat-mix" value="mixers" class="filter-cb"><label for="cat-mix">Mixers</label></div>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Brand</h4>
+                    <div class="checkbox-group"><input type="checkbox" id="b-aether" value="aether" class="filter-cb"><label for="b-aether">Aether</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="b-synapse" value="synapse" class="filter-cb"><label for="b-synapse">Synapse</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="b-void" value="void" class="filter-cb"><label for="b-void">Void</label></div>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <div style="display: flex; gap: var(--space-2); align-items: center;">
+                        <input type="number" id="min-price" class="form-control" placeholder="Min" style="height: 36px;">
+                        <span>-</span>
+                        <input type="number" id="max-price" class="form-control" placeholder="Max" style="height: 36px;">
+                    </div>
+                </div>
+
+                <button id="reset-filters" class="btn btn-secondary" style="width: 100%; margin-top: var(--space-4);">Reset Filters</button>
+                </div>
+                </div>
+            </aside>
+
+            <div class="shop-main">
+                <div class="shop-header">
+                    <div id="results-count" style="color: var(--text-secondary);">Showing all items</div>
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                        <label for="sort" style="font-size: 0.875rem;">Sort by:</label>
+                        <select id="sort" class="sort-select">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="product-grid" class="product-grid">
+                    <!-- JS populated -->
+                </div>
+                
+                <div id="no-results">
+                    <i class="ph ph-magnifying-glass" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: var(--space-3);"></i>
+                    <h3>No products found</h3>
+                    <p style="color: var(--text-secondary); margin-top: var(--space-2);">Try adjusting your filters.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shop.js"></script>
+</body>
+</html>

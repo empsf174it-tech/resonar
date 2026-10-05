@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Compare Audio Gear | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .compare-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+            flex-wrap: wrap;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .product-select {
+            appearance: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: var(--space-2) var(--space-5) var(--space-2) var(--space-3);
+            border-radius: var(--radius);
+            font-family: var(--font-body);
+            min-width: 200px;
+        }
+
+        .select-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-secondary);
+        }
+
+        /* Container specifically for the table to scroll */
+        .table-scroll-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: fixed;
+            text-align: center;
+        }
+
+        .compare-table col.label-col {
+            width: 220px;
+        }
+
+        .compare-table th, .compare-table td {
+            padding: var(--space-3) var(--space-4);
+            border-bottom: 1px solid var(--bg-tertiary);
+            vertical-align: middle;
+        }
+
+        .compare-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Sticky label column */
+        .compare-table th:first-child, .compare-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            text-align: left;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--bg-tertiary);
+        }
+
+        .spec-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .spec-label i {
+            font-size: 1.125rem;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .compare-table tbody td {
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .compare-table tbody tr:hover td {
+            background-color: rgba(255, 255, 255, 0.025);
+        }
+
+        .compare-table tbody tr:hover td:first-child {
+            background-color: var(--bg-tertiary);
+        }
+
+        /* Header: product cards */
+        .compare-table thead th {
+            padding: var(--space-5) var(--space-4) var(--space-4);
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--bg-tertiary);
+            vertical-align: top;
+        }
+
+        .compare-table thead th:first-child {
+            z-index: 3;
+            vertical-align: bottom;
+        }
+
+        .features-heading {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .features-heading small {
+            display: block;
+            margin-top: 4px;
+            font-family: var(--font-body);
+            font-size: 0.8125rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .product-head {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .product-img-small {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+            margin-bottom: var(--space-2);
+            transition: transform 0.3s ease;
+        }
+
+        .compare-table thead th:hover .product-img-small {
+            transform: scale(1.04);
+        }
+
+        .product-name {
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        .category-chip {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            background-color: var(--bg-tertiary);
+            padding: 2px 10px;
+            border-radius: 999px;
+        }
+
+        .head-price {
+            font-family: var(--font-heading);
+            font-size: 1.375rem;
+            color: var(--color-primary);
+            margin-top: var(--space-1);
+        }
+
+        .best-badge, .badge-placeholder {
+            height: 24px;
+            margin-bottom: var(--space-2);
+        }
+
+        .best-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background-color: rgba(0, 240, 255, 0.12);
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            font-family: var(--font-body);
+            font-size: 0.6875rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -4px;
+            color: var(--text-secondary);
+            background-color: var(--bg-tertiary);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .compare-table thead th:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .remove-btn:hover {
+            color: var(--color-error);
+            background-color: rgba(255, 51, 51, 0.12);
+        }
+
+        /* Top pick column: soft tint + accent bar instead of heavy borders */
+        .compare-table .highlight-col {
+            background-color: rgba(0, 240, 255, 0.04);
+        }
+
+        .compare-table thead th.highlight-col {
+            background-color: rgba(0, 240, 255, 0.07);
+            box-shadow: inset 0 3px 0 var(--color-primary);
+        }
+
+        .compare-table thead th.highlight-col .best-badge {
+            background-color: var(--color-primary);
+            color: var(--bg-primary);
+            border-color: var(--color-primary);
+        }
+
+        .compare-table tbody tr:hover td.highlight-col {
+            background-color: rgba(0, 240, 255, 0.08);
+        }
+
+        /* Yes / No pills */
+        .spec-bool {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        .spec-bool i {
+            font-size: 1rem;
+        }
+
+        .spec-true {
+            color: var(--color-success);
+            background-color: rgba(0, 204, 102, 0.12);
+        }
+
+        .spec-false {
+            color: var(--text-secondary);
+            background-color: var(--bg-tertiary);
+        }
+
+        /* Actions row */
+        .compare-table tfoot td {
+            padding: var(--space-4);
+            border-top: 1px solid var(--bg-tertiary);
+            background-color: var(--bg-primary);
+        }
+
+        .compare-table tfoot td:first-child {
+            background-color: var(--bg-primary);
+        }
+
+        .compare-table tfoot .btn {
+            width: 100%;
+        }
+
+        .compare-empty {
+            padding: var(--space-8) var(--space-4);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .compare-empty i {
+            display: block;
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: var(--space-3);
+        }
+
+        @media (max-width: 767px) {
+            .compare-table col.label-col {
+                width: 130px;
+            }
+
+            .compare-table th, .compare-table td {
+                padding: var(--space-3) var(--space-2);
+            }
+
+            .spec-label {
+                font-size: 0.6875rem;
+            }
+
+            .spec-label i {
+                display: none;
+            }
+
+            .product-img-small {
+                width: 96px;
+                height: 96px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link active">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+        
+        <section class="container page-hero">
+            <div class="badge badge-primary">Compare Gear</div>
+            <h1>Audio Spec Comparison</h1>
+            <p>Put up to 4 items head-to-head. Compare frequency response, impedance, and other vital studio metrics.</p>
+        </section>
+
+        <section class="container" style="margin-bottom: var(--space-8);">
+            
+            <div class="compare-controls">
+                <div class="select-wrapper">
+                    <select id="slot-1" class="product-select"></select>
+                    <i class="ph ph-caret-down select-icon"></i>
+                </div>
+                <div class="select-wrapper">
+                    <select id="slot-2" class="product-select"></select>
+                    <i class="ph ph-caret-down select-icon"></i>
+                </div>
+                <div class="select-wrapper">
+                    <select id="slot-3" class="product-select"></select>
+                    <i class="ph ph-caret-down select-icon"></i>
+                </div>
+                <div class="select-wrapper">
+                    <select id="slot-4" class="product-select"></select>
+                    <i class="ph ph-caret-down select-icon"></i>
+                </div>
+                <button id="reset-compare" class="btn btn-secondary" style="height: auto; padding: 0 var(--space-3);">Reset</button>
+            </div>
+
+            <div class="table-scroll-container">
+                <table class="compare-table" id="compare-table">
+                    <!-- Populated by compare.js -->
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/compare.js"></script>
+</body>
+</html>

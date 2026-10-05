@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Dashboard | Resonar</title>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+        
+        .dashboard-sidebar {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-4);
+            height: fit-content;
+            position: sticky;
+            top: calc(var(--nav-height) + var(--space-4));
+        }
+        
+        .dash-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .dash-nav button {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            width: 100%;
+            padding: var(--space-3);
+            border-radius: calc(var(--radius) - 4px);
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-align: left;
+            transition: var(--transition);
+        }
+        
+        .dash-nav button:hover,
+        .dash-nav button.active {
+            background-color: rgba(0, 240, 255, 0.1);
+            color: var(--color-primary);
+        }
+        
+        .dash-section {
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-6);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .dash-section.active {
+            display: block;
+        }
+        
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th, .data-table td {
+            padding: var(--space-3);
+            text-align: left;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+        
+        .data-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav (Simplified version for dashboard, relies on main.js) -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            
+            <button class="mobile-toggle" aria-label="Open menu">
+                <i class="ph ph-list"></i>
+            </button>
+            
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+        <div class="container">
+            <header class="page-hero">
+                <div class="badge badge-primary">Dashboard</div>
+                <h1>Welcome back, <span id="user-name">Creator</span></h1>
+                <p>Your analytics, orders, and registered warranties in one place.</p>
+            </header>
+
+            <div class="dashboard-layout">
+                <aside class="dashboard-sidebar">
+                    <nav class="dash-nav">
+                        <button class="active" data-target="analytics">
+                            <i class="ph ph-chart-bar"></i> Analytics (Demo)
+                        </button>
+                        <button data-target="orders">
+                            <i class="ph ph-package"></i> Order History
+                        </button>
+                        <button data-target="warranties">
+                            <i class="ph ph-shield-check"></i> Registered Warranties
+                        </button>
+                        <button data-target="saved">
+                            <i class="ph ph-heart"></i> Saved Gear
+                        </button>
+                    </nav>
+                </aside>
+
+                <div class="dashboard-content">
+                    
+                    <!-- Analytics -->
+                    <section id="analytics" class="dash-section active">
+                        <div class="dash-header">
+                            <h2>Listener / Download Analytics</h2>
+                            <div class="badge badge-primary">Demo Data</div>
+                        </div>
+                        <p style="margin-bottom: var(--space-4);">Monitor your podcast growth directly from your studio dashboard.</p>
+                        
+                        <div style="background-color: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius); border: 1px solid var(--bg-tertiary);">
+                            <canvas id="analyticsChart" width="800" height="400" style="width: 100%; height: auto;"></canvas>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-4); margin-top: var(--space-6);">
+                            <div style="padding: var(--space-4); background-color: rgba(0, 240, 255, 0.05); border-radius: var(--radius); text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--color-primary);" class="tabular">24.5k</div>
+                                <div style="color: var(--text-secondary); font-size: 0.875rem;">Downloads this month</div>
+                            </div>
+                            <div style="padding: var(--space-4); background-color: rgba(112, 0, 255, 0.05); border-radius: var(--radius); text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--color-accent);" class="tabular">12%</div>
+                                <div style="color: var(--text-secondary); font-size: 0.875rem;">MoM Growth</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Orders -->
+                    <section id="orders" class="dash-section">
+                        <div class="dash-header">
+                            <h2>Order History</h2>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order #</th>
+                                        <th>Date</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="tabular">#RES-8842</td>
+                                        <td class="tabular">Oct 12, 2023</td>
+                                        <td>Aether M-1 Condenser</td>
+                                        <td class="tabular price">$299.00</td>
+                                        <td><span style="color: var(--color-success);">Delivered</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tabular">#RES-7109</td>
+                                        <td class="tabular">Aug 05, 2023</td>
+                                        <td>Synapse Core Interface</td>
+                                        <td class="tabular price">$189.00</td>
+                                        <td><span style="color: var(--color-success);">Delivered</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Warranties -->
+                    <section id="warranties" class="dash-section">
+                        <div class="dash-header">
+                            <h2>Registered Warranties</h2>
+                            <a href="warranty.html" class="btn btn-secondary">Register New</a>
+                        </div>
+                        <div id="warranty-list" style="display: grid; gap: var(--space-4);">
+                            <!-- Populated by JS -->
+                            <p style="color: var(--text-secondary);">Loading warranties...</p>
+                        </div>
+                    </section>
+                    
+                    <!-- Saved -->
+                    <section id="saved" class="dash-section">
+                        <div class="dash-header">
+                            <h2>Saved Gear</h2>
+                        </div>
+                        <p style="color: var(--text-secondary);">You have no saved gear yet. Head over to the <a href="shop.html" style="color: var(--color-primary);">Shop</a> to find something you like.</p>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

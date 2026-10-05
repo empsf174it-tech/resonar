@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Audio Guides | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .guide-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .guide-article h2 {
+            margin: var(--space-6) 0 var(--space-3);
+        }
+        .guide-article p {
+            margin-bottom: var(--space-3);
+            font-size: 1.125rem;
+        }
+        .guide-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+        .guide-meta img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* ANC Helper Tool */
+        .anc-helper {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--color-primary);
+            border-radius: var(--radius);
+            padding: var(--space-5);
+            margin: var(--space-6) 0;
+            text-align: center;
+        }
+        
+        .anc-options {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+            margin-top: var(--space-4);
+        }
+        
+        .anc-btn {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+        
+        .anc-btn:hover, .anc-btn.active {
+            border-color: var(--color-primary);
+            background-color: rgba(0, 240, 255, 0.1);
+        }
+        
+        #anc-result {
+            margin-top: var(--space-4);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--bg-tertiary);
+            display: none;
+            animation: slideUpFade 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link active">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+
+        <section class="container page-hero">
+            <div class="badge badge-primary">Audio Demystified</div>
+            <h1>The Complete Guide to Noise Cancellation</h1>
+            <p>Passive isolation vs. ANC, how each architecture works, and how to pick the right level for where you listen and edit.</p>
+        </section>
+
+        <article class="container guide-article" style="margin-bottom: var(--space-8);">
+            
+            <div class="guide-meta">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" alt="Sarah Jenkins">
+                <div>
+                    <div>By <strong>Sarah Jenkins</strong>, Lead Audio Engineer</div>
+                    <div>Last Updated: <span class="tabular">Oct 12, 2023</span></div>
+                </div>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=1200" alt="Headphones on studio desk" style="width: 100%; border-radius: var(--radius); margin-bottom: var(--space-5);">
+
+            <p>Whether you're editing a podcast in a busy coffee shop or tracking vocals in a home studio, understanding noise cancellation is critical. But the terminology—Passive, Active, Feedforward, Hybrid—can be overwhelming.</p>
+            
+            <h2>Passive Isolation vs. Active Noise Cancellation (ANC)</h2>
+            <p><strong>Passive Isolation</strong> is just physical blockage. Thick earpads, closed-back designs, and tight clamping force prevent sound waves from entering your ear canal. It works best for high-frequency sounds like people talking or glass clinking.</p>
+            <p><strong>Active Noise Cancellation (ANC)</strong> uses microphones to listen to the outside world, then plays an inverted sound wave (anti-noise) into your ears to cancel it out. ANC is highly effective against low-frequency, constant drones like airplane engines or AC units.</p>
+
+            <h2>Types of ANC Architectures</h2>
+            <div class="grid-3" style="gap: var(--space-4); margin: var(--space-4) 0;">
+                <div style="background: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: var(--space-2); color: var(--color-primary);">Feedforward</h3>
+                    <p style="font-size: 0.875rem;">Microphones placed on the outside of the earcup. Reacts quickly, but can't self-correct if the anti-noise isn't perfect.</p>
+                </div>
+                <div style="background: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: var(--space-2); color: var(--color-primary);">Feedback</h3>
+                    <p style="font-size: 0.875rem;">Microphones placed inside the earcup. Hears exactly what you hear and corrects it, but slower to react to sudden noises.</p>
+                </div>
+                <div style="background: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: var(--space-2); color: var(--color-primary);">Hybrid</h3>
+                    <p style="font-size: 0.875rem;">Uses both internal and external microphones. The most effective, but usually found only on premium models.</p>
+                </div>
+            </div>
+
+            <div class="anc-helper">
+                <h3>Find Your Perfect ANC Level</h3>
+                <p style="font-size: 1rem; margin-top: 8px;">Where do you do most of your listening or editing?</p>
+                
+                <div class="anc-options">
+                    <button class="anc-btn" data-env="quiet">Quiet Home Studio</button>
+                    <button class="anc-btn" data-env="office">Busy Office / Cafe</button>
+                    <button class="anc-btn" data-env="travel">Airplanes / Transit</button>
+                </div>
+                
+                <div id="anc-result">
+                    <h4 id="anc-result-title" style="color: var(--color-primary); font-size: 1.25rem;"></h4>
+                    <p id="anc-result-desc" style="font-size: 1rem; margin-top: 8px;"></p>
+                </div>
+            </div>
+
+            <h2>How We Test ANC</h2>
+            <p>At Resonar, we don't just rely on spec sheets. We test headphones in our A-B studio using a calibrated noise-generator rig. We simulate 85dB of airplane cabin noise, street traffic, and human speech patterns. We then measure the exact decibel reduction at the ear simulator.</p>
+            
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/guides.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>About Us | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .about-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            align-items: center;
+            margin-top: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .about-img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .value-grid {
+            margin: var(--space-8) 0;
+        }
+
+        .value-card {
+            background-color: var(--bg-secondary);
+            padding: var(--space-5);
+            border-radius: var(--radius);
+            border-top: 2px solid var(--color-primary);
+        }
+
+        @media (max-width: 900px) {
+            .about-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count"
+                            style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+
+        <section class="container page-hero">
+            <div class="badge badge-primary">About Us</div>
+            <h1>Engineering the Sound of the Future.</h1>
+            <p>A collective of audio engineers, podcasters, and data analysts building a more honest way to choose studio gear.</p>
+        </section>
+
+        <section class="container about-hero">
+            <div>
+                <h2 style="margin-bottom: var(--space-4);">Our Story</h2>
+                <p style="font-size: 1.125rem; margin-bottom: var(--space-4);">
+                    Resonar was born out of frustration. In a market flooded with exaggerated marketing claims and
+                    generic USB microphones, we wanted to create a haven for serious creators.
+                </p>
+                <p style="font-size: 1.125rem;">
+                    We are a collective of audio engineers, podcasters, and data analysts. We believe that choosing
+                    studio gear should be an objective, measurable process. That's why we build deep analytics and 360°
+                    visualization tools directly into our shopping experience.
+                </p>
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800"
+                    alt="Resonar Studio Setup" class="about-img" loading="lazy">
+            </div>
+        </section>
+
+        <section class="container"
+            style="background-color: var(--bg-secondary); padding: var(--space-6); border-radius: var(--radius); margin-bottom: var(--space-8);">
+            <div class="section-header">
+                <h2>Our Testing Methodology</h2>
+                <p>Independence and objectivity are our core tenets.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: 800px; margin: 0 auto;">
+                <p><strong>1. The A-B Studio:</strong> Every microphone and interface is tested in our acoustically
+                    treated studio (RT60 < 0.2s). We do not rely on manufacturer spec sheets.</p>
+                        <p><strong>2. Frequency Response:</strong> We measure the exact frequency response using a
+                            calibrated sweep generator, ensuring that the graphs we provide are accurate representations
+                            of what you will hear.</p>
+                        <p><strong>3. The Podcast Stress Test:</strong> Clinical data is not enough. We test gear with
+                            real human voices—handling plosives, sibilance, and proximity effect—to ensure it performs
+                            in real-world podcasting scenarios.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2 style="text-align: center;">Our Values</h2>
+            <div class="value-grid grid-3">
+                <div class="value-card">
+                    <i class="ph ph-scales"
+                        style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3> Objectivity</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">We don't do hype. If a microphone has
+                        a harsh 8kHz peak, we will show you exactly where it is on the frequency graph.</p>
+                </div>
+                <div class="value-card">
+                    <i class="ph ph-users"
+                        style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3>Creator First</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">From our analytics dashboard to our
+                        instant warranty registration, every tool we build is designed to save creators time.</p>
+                </div>
+                <div class="value-card">
+                    <i class="ph ph-shield-check"
+                        style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: var(--space-3);"></i>
+                    <h3>Transparency</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">We list the pros and the cons. We tell
+                        you who should buy a product, and more importantly, who should skip it.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

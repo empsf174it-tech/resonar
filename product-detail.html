@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Aether M-1 Condenser | Resonar</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- JSON-LD Product & AggregateRating -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Aether M-1 Condenser",
+      "image": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=600",
+      "description": "High-fidelity podcast and studio condenser microphone.",
+      "brand": {
+        "@type": "Brand",
+        "name": "Aether"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "price": "299.00",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "124"
+      }
+    }
+    </script>
+    
+    <style>
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        @media (max-width: 900px) {
+            .product-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 360 Viewer */
+        .viewer-container {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            user-select: none;
+            touch-action: none; /* Prevent scroll while dragging */
+        }
+
+        .viewer-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .viewer-container img.active {
+            opacity: 1;
+        }
+
+        .viewer-overlay {
+            position: absolute;
+            bottom: var(--space-4);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--space-2);
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(4px);
+            padding: var(--space-2) var(--space-3);
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .viewer-btn {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+        }
+
+        .viewer-btn:hover {
+            color: var(--color-primary);
+        }
+
+        .viewer-indicator {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .viewer-instructions {
+            position: absolute;
+            top: var(--space-4);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 12, 0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Product Info */
+        .rating-stars {
+            color: #ffb800;
+            display: flex;
+            gap: 2px;
+            align-items: center;
+            font-size: 1.125rem;
+        }
+
+        .price-large {
+            font-size: 2.5rem;
+            font-weight: var(--fw-h1);
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            margin: var(--space-3) 0;
+        }
+
+        .stock-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--color-success);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin: var(--space-5) 0;
+        }
+
+        .pro-list li, .con-list li {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+        .pro-list i { color: var(--color-success); margin-top: 4px; }
+        .con-list i { color: var(--color-error); margin-top: 4px; }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-5) 0;
+        }
+        .specs-table th, .specs-table td {
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--bg-tertiary);
+            text-align: left;
+        }
+        .specs-table th { color: var(--text-secondary); font-weight: 400; }
+        .specs-table td { text-align: right; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link active">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+        
+        <!-- Breadcrumb -->
+        <div class="container" style="padding-top: var(--space-4); color: var(--text-secondary); font-size: 0.875rem;">
+            <a href="index.html">Home</a> / <a href="shop.html?category=microphones">Microphones</a> / Aether M-1
+        </div>
+
+        <section class="container product-layout">
+            
+            <!-- 360 Viewer Area -->
+            <div>
+                <div class="viewer-container" id="viewer360" tabindex="0" aria-label="360 degree product viewer. Use left and right arrow keys to rotate.">
+                    <div class="viewer-instructions">Drag or use arrow keys to rotate</div>
+                    
+                    <!-- Images populated by JS -->
+                    
+                    <div class="viewer-overlay">
+                        <button class="viewer-btn" id="v-play-pause" aria-label="Play/Pause rotation">
+                            <i class="ph ph-play-circle"></i>
+                        </button>
+                        <div class="viewer-indicator"><span id="v-frame">1</span>/36</div>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.75rem; color: var(--text-secondary); margin-top: var(--space-2);">
+                    * Demo mode: using single placeholder image for all frames.
+                </p>
+            </div>
+
+            <!-- Product Info Area -->
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: var(--space-2);">Aether M-1 Condenser</h1>
+                
+                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                    <div class="rating-stars">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i>
+                    </div>
+                    <span class="tabular">4.8 (124 reviews)</span>
+                    <span style="color: var(--text-secondary);">|</span>
+                    <span class="badge badge-primary">Resonar Choice</span>
+                </div>
+
+                <div class="price-large tabular">$299.00</div>
+                <div class="stock-indicator"><i class="ph-fill ph-check-circle"></i> In Stock - Ships Tomorrow</div>
+
+                <p style="margin: var(--space-4) 0; font-size: 1.125rem;">
+                    The industry standard for studio vocal tracking and high-fidelity podcasting. Designed to reject off-axis noise while capturing the warmth and clarity of the human voice.
+                </p>
+
+                <!-- Buy Actions -->
+                <div style="display: flex; gap: var(--space-3); margin: var(--space-5) 0;">
+                    <button class="btn btn-primary" onclick="addToCart('mic-1')" style="flex: 1;"><i class="ph ph-shopping-cart-simple"></i> Add to Cart</button>
+                    <button class="btn btn-secondary"><i class="ph ph-heart"></i></button>
+                </div>
+
+                <!-- Pros/Cons -->
+                <div class="pros-cons">
+                    <div>
+                        <h4 style="margin-bottom: var(--space-2);">Pros</h4>
+                        <ul class="pro-list">
+                            <li><i class="ph ph-check-circle"></i> Excellent off-axis rejection</li>
+                            <li><i class="ph ph-check-circle"></i> Flat, natural frequency response</li>
+                            <li><i class="ph ph-check-circle"></i> Includes shockmount</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: var(--space-2);">Cons</h4>
+                        <ul class="con-list">
+                            <li><i class="ph ph-x-circle"></i> Requires +48V Phantom Power</li>
+                            <li><i class="ph ph-x-circle"></i> Heavy (requires strong arm)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Specs -->
+                <h3 style="margin-top: var(--space-5); border-bottom: 1px solid var(--bg-tertiary); padding-bottom: var(--space-2);">Audio Specifications</h3>
+                <table class="specs-table tabular">
+                    <tr><th>Frequency Response</th><td>20Hz - 20kHz</td></tr>
+                    <tr><th>Impedance</th><td>150 Ohms</td></tr>
+                    <tr><th>Sensitivity</th><td>-34 dBV/Pa</td></tr>
+                    <tr><th>Polar Pattern</th><td>Cardioid</td></tr>
+                    <tr><th>Connection</th><td>XLR (3-pin)</td></tr>
+                    <tr><th>Weight</th><td>450g</td></tr>
+                </table>
+
+                <!-- Warranty Info -->
+                <div style="background-color: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius); border: 1px solid var(--bg-tertiary); display: flex; align-items: center; gap: var(--space-4);">
+                    <i class="ph ph-shield-check" style="font-size: 2.5rem; color: var(--color-primary);"></i>
+                    <div>
+                        <h4 style="margin-bottom: 4px;">2-Year Pro Warranty</h4>
+                        <p style="font-size: 0.875rem; color: var(--text-secondary);">Register instantly after purchase. <a href="warranty.html" style="color: var(--color-primary);">Learn more</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/viewer360.js"></script>
+    <script>
+        function addToCart(id) {
+            const cart = JSON.parse(localStorage.getItem('resonar_cart') || '[]');
+            const existing = cart.find(i => i.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ id, quantity: 1 });
+            }
+            localStorage.setItem('resonar_cart', JSON.stringify(cart));
+            updateCartCount(); // from main.js
+            
+            // Visual feedback
+            const btn = document.querySelector('.btn-primary');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-check"></i> Added';
+            btn.style.backgroundColor = 'var(--color-success)';
+            btn.style.boxShadow = 'none';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.backgroundColor = '';
+                btn.style.boxShadow = '';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Shopping Cart | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-6);
+            margin: var(--space-6) 0 var(--space-8);
+        }
+        
+        .cart-items {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-5);
+        }
+        
+        .cart-summary {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-5);
+            height: fit-content;
+            position: sticky;
+            top: calc(var(--nav-height) + var(--space-4));
+        }
+
+        .cart-item-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .cart-item-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: calc(var(--radius) - 4px);
+            object-fit: cover;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            background-color: var(--bg-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .qty-btn {
+            color: var(--text-secondary);
+        }
+        .qty-btn:hover {
+            color: var(--color-primary);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-3);
+            color: var(--text-secondary);
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-4);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--bg-tertiary);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Mock Payment Buttons */
+        .mock-pay-btn {
+            width: 100%;
+            height: 48px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+            transition: var(--transition);
+        }
+        .pay-stripe {
+            background-color: #635bff;
+            color: white;
+        }
+        .pay-paypal {
+            background-color: #ffc439;
+            color: #000;
+        }
+
+        .trust-box {
+            margin-top: var(--space-5);
+            padding: var(--space-4);
+            background-color: var(--bg-primary);
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .trust-box ul li {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .trust-box i { color: var(--color-primary); }
+
+        @media (max-width: 768px) {
+            .cart-layout { grid-template-columns: 1fr; }
+            .cart-summary { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper active" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+        <section class="container page-hero">
+            <div class="badge badge-primary">Cart</div>
+            <h1>Your Cart</h1>
+            <p>Review your gear before checkout. Free shipping and a 2-year warranty on every order.</p>
+        </section>
+
+        <div class="container">
+            
+            <div id="empty-cart" style="display: none; text-align: center; padding: var(--space-8) 0;">
+                <i class="ph ph-shopping-cart" style="font-size: 4rem; color: var(--bg-tertiary);"></i>
+                <h2 style="margin: var(--space-4) 0 var(--space-2);">Your cart is empty</h2>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Looks like you haven't added any gear yet.</p>
+                <a href="shop.html" class="btn btn-primary">Go to Shop</a>
+            </div>
+
+            <div id="cart-content" class="cart-layout">
+                <div class="cart-items" id="cart-items-container">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="cart-summary">
+                    <h3 style="margin-bottom: var(--space-4);">Order Summary</h3>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal" class="tabular">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span class="tabular">Free</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Taxes (Estimated)</span>
+                        <span id="taxes" class="tabular">$0.00</span>
+                    </div>
+                    
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="total" class="tabular" style="color: var(--color-primary);">$0.00</span>
+                    </div>
+
+                    <div style="margin-top: var(--space-5);">
+                        <button class="mock-pay-btn btn-primary" onclick="alert('Checkout demo placeholder')">Proceed to Checkout</button>
+                        <button class="mock-pay-btn pay-stripe" onclick="alert('Stripe placeholder')"><i class="ph-fill ph-stripe-logo"></i> Pay</button>
+                        <button class="mock-pay-btn pay-paypal" onclick="alert('PayPal placeholder')"><i class="ph-fill ph-paypal-logo"></i> PayPal</button>
+                    </div>
+
+                    <div class="trust-box">
+                        <ul style="list-style: none; padding: 0;">
+                            <li><i class="ph ph-truck"></i> Free 2-day shipping on all orders</li>
+                            <li><i class="ph ph-arrow-u-down-left"></i> 30-day hassle-free returns</li>
+                            <li><i class="ph ph-shield-check"></i> 2-Year Studio Warranty</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Mock product DB for cart resolution
+        const productsDB = {
+            'mic-1': { name: 'Aether M-1 Condenser', price: 299, image: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=200' },
+            'mic-2': { name: 'Echo V-Dynamic', price: 199, image: 'https://images.unsplash.com/photo-1541592553160-82008b127ccb?auto=format&fit=crop&q=80&w=200' },
+            'int-1': { name: 'Synapse Core Interface', price: 189, image: 'https://images.unsplash.com/photo-1640756883978-e9b6ddc8f91f?auto=format&fit=crop&q=80&w=200' },
+            'head-1': { name: 'Void 7X Reference Cans', price: 249, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=200' },
+            'head-2': { name: 'Silence Pro Hybrid ANC', price: 349, image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=200' },
+            'mix-1': { name: 'Nexus 4-Channel Desk', price: 499, image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=200' }
+        };
+
+        document.addEventListener('DOMContentLoaded', renderCart);
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('resonar_cart') || '[]');
+            const emptyState = document.getElementById('empty-cart');
+            const contentState = document.getElementById('cart-content');
+            const container = document.getElementById('cart-items-container');
+
+            if (cart.length === 0) {
+                emptyState.style.display = 'block';
+                contentState.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            contentState.style.display = 'grid';
+            container.innerHTML = '';
+
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const product = productsDB[item.id];
+                if (!product) return; // skip if invalid
+                
+                subtotal += product.price * item.quantity;
+
+                container.innerHTML += `
+                    <div class="cart-item-row">
+                        <img src="${product.image}" alt="${product.name}" class="cart-item-img">
+                        <div style="flex: 1;">
+                            <h4 style="margin-bottom: 4px;">${product.name}</h4>
+                            <p class="tabular price" style="color: var(--text-secondary);">$${product.price.toFixed(2)}</p>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)"><i class="ph ph-minus"></i></button>
+                            <span class="tabular" style="font-weight: 500; min-width: 20px; text-align: center;">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)"><i class="ph ph-plus"></i></button>
+                        </div>
+                        <div style="text-align: right; min-width: 80px;">
+                            <p class="tabular price" style="font-weight: 700;">$${(product.price * item.quantity).toFixed(2)}</p>
+                            <button onclick="removeItem('${item.id}')" style="color: var(--color-error); font-size: 0.875rem; margin-top: 4px;">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const tax = subtotal * 0.08;
+            const total = subtotal + tax;
+
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('taxes').textContent = '$' + tax.toFixed(2);
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+
+        function updateQty(id, delta) {
+            let cart = JSON.parse(localStorage.getItem('resonar_cart') || '[]');
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                localStorage.setItem('resonar_cart', JSON.stringify(cart));
+                updateCartCount(); // main.js
+                renderCart();
+            }
+        }
+
+        function removeItem(id) {
+            let cart = JSON.parse(localStorage.getItem('resonar_cart') || '[]');
+            cart = cart.filter(i => i.id !== id);
+            localStorage.setItem('resonar_cart', JSON.stringify(cart));
+            updateCartCount(); // main.js
+            renderCart();
+        }
+    </script>
+</body>
+</html>

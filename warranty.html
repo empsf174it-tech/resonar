@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Warranty Registration | Resonar</title>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        #guest-prompt {
+            display: none;
+            margin-top: var(--space-4);
+            padding: var(--space-2) var(--space-3);
+            background-color: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+        }
+
+        #guest-prompt a {
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+
+        /* Two-column layout: info panel + form card */
+        .warranty-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+            gap: var(--space-6);
+            align-items: start;
+            padding-top: var(--space-5);
+            padding-bottom: var(--space-9);
+        }
+
+        .warranty-aside h2 {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .warranty-aside > p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-5);
+        }
+
+        .benefit-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            margin-bottom: var(--space-5);
+        }
+
+        .benefit {
+            display: flex;
+            gap: var(--space-3);
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            background-color: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            color: var(--color-primary);
+            font-size: 1.375rem;
+        }
+
+        .benefit h3 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .benefit p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .serial-help {
+            padding: var(--space-4);
+            border-radius: var(--radius);
+            border: 1px dashed var(--bg-tertiary);
+            background-color: var(--bg-secondary);
+        }
+
+        .serial-help h3 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.9375rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .serial-help h3 i {
+            color: var(--color-primary);
+        }
+
+        .serial-help p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .serial-help code {
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            letter-spacing: 0.04em;
+        }
+
+        /* Form card */
+        .warranty-container {
+            position: relative;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-6);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+        }
+
+        .warranty-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+        }
+
+        .form-step {
+            margin-bottom: var(--space-5);
+        }
+
+        .form-step-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .step-num {
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            color: var(--bg-primary);
+            font-size: 0.8125rem;
+            font-weight: 700;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+        }
+
+        /* Inputs with leading icons */
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon > i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .input-icon .form-control {
+            padding-left: 44px;
+        }
+
+        .input-icon:focus-within > i {
+            color: var(--color-primary);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+            background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23a0a0a0%22 viewBox=%220 0 24 24%22 width=%2220%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        input[type="date"].form-control {
+            color-scheme: dark;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .terms-box {
+            padding: var(--space-3);
+            border-radius: var(--radius);
+            background-color: var(--bg-primary);
+            border: 1px solid var(--bg-tertiary);
+            margin-bottom: 0;
+        }
+
+        .terms-box label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .terms-box input {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .terms-error {
+            text-align: left;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: var(--space-5);
+            gap: var(--space-2);
+        }
+
+        .secure-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: var(--space-3);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        #warranty-success {
+            display: none;
+            text-align: center;
+            padding: var(--space-6) 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--color-success);
+            margin-bottom: var(--space-3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 1024px) {
+            .warranty-layout {
+                grid-template-columns: 1fr;
+                gap: var(--space-6);
+            }
+
+            /* Form first on smaller screens, info below */
+            .warranty-container {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .warranty-layout {
+                padding-top: var(--space-6);
+                padding-bottom: var(--space-8);
+            }
+
+            .warranty-container {
+                padding: var(--space-5) var(--space-4);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link active">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+
+        <section class="container page-hero">
+            <div class="badge badge-primary">2-Year Coverage</div>
+            <h1>Instant Warranty Registration</h1>
+            <p>Protect your studio investment. Register your Resonar gear today to activate your 2-year warranty and get priority support.</p>
+            <div id="guest-prompt">
+                <i class="ph ph-info"></i> You are registering as a guest. <a href="login.html">Log in</a> to keep this in your dashboard.
+            </div>
+        </section>
+
+        <section class="container warranty-layout">
+
+            <aside class="warranty-aside">
+                <h2>Why register?</h2>
+                <p>It takes under a minute and keeps your gear covered from day one.</p>
+
+                <div class="benefit-list">
+                    <div class="benefit">
+                        <div class="benefit-icon"><i class="ph ph-shield-check"></i></div>
+                        <div>
+                            <h3>2-year full coverage</h3>
+                            <p>Parts and labour for manufacturing defects, no receipts to keep.</p>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="benefit-icon"><i class="ph ph-headset"></i></div>
+                        <div>
+                            <h3>Priority support</h3>
+                            <p>Skip the queue with a direct line to our studio technicians.</p>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="benefit-icon"><i class="ph ph-lightning"></i></div>
+                        <div>
+                            <h3>Faster claims</h3>
+                            <p>Your product and purchase date are on file, so claims start instantly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="serial-help">
+                    <h3><i class="ph ph-magnifying-glass"></i> Where's my serial number?</h3>
+                    <p>Look for a sticker on the underside of the device or inside the box lid. It starts with <code>RES-</code>, e.g. <code>RES-1234-ABCD</code>.</p>
+                </div>
+            </aside>
+
+            <div class="warranty-container">
+
+                <form id="warranty-form" novalidate action="https://formspree.io/f/placeholder" method="POST">
+
+                    <div class="form-step">
+                        <div class="form-step-title"><span class="step-num">1</span> Your details</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="w-name">Full Name</label>
+                                <div class="input-icon">
+                                    <i class="ph ph-user"></i>
+                                    <input type="text" id="w-name" class="form-control" placeholder="Jane Doe" autocomplete="name" required>
+                                </div>
+                                <div class="error-msg"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="w-email">Email Address</label>
+                                <div class="input-icon">
+                                    <i class="ph ph-envelope-simple"></i>
+                                    <input type="email" id="w-email" class="form-control" placeholder="you@example.com" autocomplete="email" required>
+                                </div>
+                                <div class="error-msg"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="form-step-title"><span class="step-num">2</span> Product</div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="w-product">Product Model</label>
+                            <div class="input-icon">
+                                <i class="ph ph-package"></i>
+                                <select id="w-product" class="form-control" required>
+                                    <option value="">Select a product...</option>
+                                    <option value="Aether M-1 Condenser">Aether M-1 Condenser</option>
+                                    <option value="Echo V-Dynamic">Echo V-Dynamic</option>
+                                    <option value="Synapse Core Interface">Synapse Core Interface</option>
+                                    <option value="Void 7X Reference Cans">Void 7X Reference Cans</option>
+                                    <option value="Silence Pro Hybrid ANC">Silence Pro Hybrid ANC</option>
+                                    <option value="Nexus 4-Channel Desk">Nexus 4-Channel Desk</option>
+                                </select>
+                            </div>
+                            <div class="error-msg"></div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="w-serial">Serial Number</label>
+                                <div class="input-icon">
+                                    <i class="ph ph-barcode"></i>
+                                    <input type="text" id="w-serial" class="form-control" placeholder="RES-1234-ABCD" required>
+                                </div>
+                                <p class="form-hint">Format: RES-XXXX-XXXX</p>
+                                <div class="error-msg"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="w-date">Purchase Date</label>
+                                <div class="input-icon">
+                                    <i class="ph ph-calendar-blank"></i>
+                                    <input type="date" id="w-date" class="form-control" required>
+                                </div>
+                                <div class="error-msg"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox-group terms-box">
+                        <input type="checkbox" id="w-terms" required>
+                        <label for="w-terms">
+                            I confirm that the information provided is accurate and I agree to the Warranty Terms.
+                        </label>
+                    </div>
+                    <div class="error-msg terms-error"></div>
+
+                    <button type="submit" class="btn btn-primary submit-btn"><i class="ph ph-shield-check"></i> Register Warranty</button>
+                    <p class="secure-note"><i class="ph ph-lock-simple"></i> Your details are only used for warranty and support.</p>
+                </form>
+
+                <div id="warranty-success">
+                    <i class="ph ph-check-circle success-icon"></i>
+                    <h2>Registration Successful</h2>
+                    <p style="margin: var(--space-3) 0; color: var(--text-secondary);">Your product warranty has been activated.</p>
+                    <div style="background-color: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius); margin-bottom: var(--space-4);">
+                        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 4px;">Reference Number</p>
+                        <p style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 500; color: var(--color-primary);" class="tabular" id="ref-number">WAR-XXXXXXXX</p>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-secondary">Go to Dashboard</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/warranty.js"></script>
+</body>
+</html>

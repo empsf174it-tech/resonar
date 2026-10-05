@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Services | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+        
+        .service-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-6);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow);
+            transform: translateY(-5px);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: var(--space-4);
+        }
+        
+        .service-card h3 {
+            margin-bottom: var(--space-3);
+        }
+        
+        .service-card p {
+            margin-bottom: var(--space-5);
+            flex: 1;
+        }
+        
+        .service-card .btn {
+            align-self: flex-start;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link active">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+
+        <section class="container page-hero">
+            <div class="badge badge-primary">What We Do</div>
+            <h1>More Than Just a Gear Shop.</h1>
+            <p>Resonar provides an end-to-end ecosystem for the modern creator. From purchasing to analytics, we support your studio's growth.</p>
+        </section>
+
+        <section class="container service-grid">
+            
+            <div class="service-card">
+                <i class="ph ph-shopping-bag service-icon"></i>
+                <h3>Curated Gear Shop</h3>
+                <p>Access our inventory of high-fidelity microphones, interfaces, and headphones. Every item is verified by our studio engineers before it hits the store.</p>
+                <a href="shop.html" class="btn btn-secondary">Browse Shop</a>
+            </div>
+
+            <div class="service-card">
+                <i class="ph ph-faders service-icon"></i>
+                <h3>Spec Comparisons</h3>
+                <p>Stop guessing. Use our advanced comparison tool to put up to 4 pieces of gear head-to-head. Compare frequency response, impedance, and more in real-time.</p>
+                <a href="compare.html" class="btn btn-secondary">Compare Gear</a>
+            </div>
+
+            <div class="service-card">
+                <i class="ph ph-graduation-cap service-icon"></i>
+                <h3>Setup Guidance</h3>
+                <p>Not sure what you need? Our interactive guides demystify audio jargon, helping you choose the right ANC level and connection types for your environment.</p>
+                <a href="guides.html" class="btn btn-secondary">Read Guides</a>
+            </div>
+
+            <div class="service-card">
+                <i class="ph ph-shield-check service-icon"></i>
+                <h3>Instant Warranty Protection</h3>
+                <p>Register your Resonar gear instantly online. Keep track of all your active warranties in one place within your creator dashboard.</p>
+                <a href="warranty.html" class="btn btn-secondary">Register Product</a>
+            </div>
+
+            <div class="service-card">
+                <i class="ph ph-chart-line-up service-icon"></i>
+                <h3>Listener Analytics</h3>
+                <p>Connect your RSS feed to your Resonar dashboard (demo) to track downloads, listener geography, and month-over-month growth directly in your studio portal.</p>
+                <a href="dashboard.html" class="btn btn-secondary">View Dashboard</a>
+            </div>
+            
+            <div class="service-card">
+                <i class="ph ph-headset service-icon"></i>
+                <h3>Expert Support</h3>
+                <p>Got a hum in your signal chain? Our audio engineers are on standby to troubleshoot your specific setup and get you back to recording.</p>
+                <a href="contact.html" class="btn btn-secondary">Contact Support</a>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

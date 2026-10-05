@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Contact Us | Resonar</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: var(--space-8);
+            margin: var(--space-4) auto var(--space-7);
+            align-items: start;
+        }
+
+        .contact-info {
+            background-color: var(--bg-secondary);
+            padding: var(--space-6);
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .info-item {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-5);
+        }
+        
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item i {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        /* Studio map */
+        .map-section {
+            margin-bottom: var(--space-9);
+        }
+
+        .map-card {
+            position: relative;
+            height: 440px;
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+            overflow: hidden;
+            background-color: var(--bg-secondary);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .map-card iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            /* Dark map to match the site theme */
+            filter: invert(90%) hue-rotate(180deg) saturate(0.6) brightness(0.95);
+        }
+
+        .map-overlay {
+            position: absolute;
+            left: var(--space-4);
+            bottom: var(--space-4);
+            max-width: 320px;
+            padding: var(--space-4);
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-tertiary);
+            background-color: rgba(10, 10, 12, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .map-overlay h3 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 1.125rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .map-overlay h3 i {
+            color: var(--color-primary);
+        }
+
+        .map-overlay p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+        }
+
+        .map-overlay .btn {
+            gap: var(--space-2);
+        }
+
+        @media (max-width: 768px) {
+            .contact-layout { grid-template-columns: 1fr; }
+
+            .map-card {
+                height: auto;
+            }
+
+            .map-card iframe {
+                height: 320px;
+            }
+
+            .map-overlay {
+                position: static;
+                max-width: none;
+                border: none;
+                border-top: 1px solid var(--bg-tertiary);
+                border-radius: 0;
+                background-color: var(--bg-secondary);
+            }
+        }
+        
+        /* Ensure no overflow at 360px */
+        @media (max-width: 360px) {
+            .contact-info { padding: var(--space-4); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph ph-waveform"></i>
+                Resonar<span>.</span>
+            </a>
+            <button class="mobile-toggle" aria-label="Open menu"><i class="ph ph-list"></i></button>
+            <nav class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="compare.html" class="nav-link">Compare</a>
+                    <a href="guides.html" class="nav-link">Guides</a>
+                    <a href="warranty.html" class="nav-link">Warranty</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="cart.html" class="cart-icon-wrapper" aria-label="Cart">
+                        <i class="ph ph-shopping-cart-simple"></i><span class="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="login.html" id="nav-login-btn" class="btn btn-primary">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: var(--nav-height);">
+
+        <section class="container page-hero">
+            <div class="badge badge-primary">Contact</div>
+            <h1>We're Here to Help.</h1>
+            <p>Questions about gear, orders, or warranties? Our studio team usually replies within 2 hours.</p>
+        </section>
+
+        <section class="container contact-layout">
+            
+            <div class="contact-info">
+                <h2 style="margin-bottom: var(--space-5);">Get in Touch</h2>
+                
+                <div class="info-item">
+                    <i class="ph ph-envelope-simple"></i>
+                    <div>
+                        <h4 style="margin-bottom: 4px;">Email Support</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">support@resonar.demo<br>Response time: ~2 hours</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <i class="ph ph-phone"></i>
+                    <div>
+                        <h4 style="margin-bottom: 4px;">Studio Line</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;" class="tabular">+1 (555) 019-8472<br>Mon-Fri, 9am - 6pm EST</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <i class="ph ph-map-pin"></i>
+                    <div>
+                        <h4 style="margin-bottom: 4px;">Visit the Studio</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Williamsburg, Brooklyn, NY<br>Demos by appointment</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="ph ph-shield-check"></i>
+                    <div>
+                        <h4 style="margin-bottom: 4px;">Warranty Claims</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Please register your product first on the <a href="warranty.html" style="color: var(--color-primary);">Warranty page</a> before filing a claim.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <form id="contact-form" action="https://formspree.io/f/placeholder" method="POST" novalidate>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                        <div class="form-group">
+                            <label class="form-label" for="c-name">Name</label>
+                            <input type="text" id="c-name" name="name" class="form-control" required>
+                            <div class="error-msg">Name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="c-email">Email</label>
+                            <input type="email" id="c-email" name="email" class="form-control" required>
+                            <div class="error-msg">Valid email is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="c-subject">Subject</label>
+                        <select id="c-subject" name="subject" class="form-control" style="appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23fff%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 12px center;" required>
+                            <option value="">Select a topic...</option>
+                            <option value="gear">Gear Advice / Setup Guidance</option>
+                            <option value="order">Order Status</option>
+                            <option value="warranty">Warranty & Returns</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error-msg">Please select a subject</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="c-message">Message</label>
+                        <textarea id="c-message" name="message" class="form-control" rows="6" required></textarea>
+                        <div class="error-msg">Message cannot be empty</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="c-submitBtn">Send Message</button>
+                    <div id="c-success" style="display: none; color: var(--color-success); margin-top: var(--space-3); font-weight: 500;"><i class="ph ph-check-circle"></i> Message sent successfully!</div>
+                </form>
+            </div>
+
+        </section>
+
+        <section class="container map-section">
+            <div class="map-card">
+                <iframe
+                    src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1sWilliamsburg,+Brooklyn,+NY!6i14"
+                    title="Map showing the Resonar studio in Williamsburg, Brooklyn"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen></iframe>
+                <div class="map-overlay">
+                    <h3><i class="ph-fill ph-map-pin"></i> Resonar Studio</h3>
+                    <p>Williamsburg, Brooklyn, NY<br>Listening room open Mon–Fri, 9am – 6pm EST. Demos by appointment.</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Williamsburg,+Brooklyn,+NY" target="_blank" rel="noopener" class="btn btn-secondary"><i class="ph ph-navigation-arrow"></i> Get Directions</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: span 1;">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-3);">
+                        <i class="ph ph-waveform"></i> Resonar<span>.</span>
+                    </a>
+                    <p style="font-size: 0.875rem;">Precision audio management and analytics for the modern creator.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <div class="footer-links">
+                        <a href="shop.html?category=microphones">Microphones</a>
+                        <a href="shop.html?category=interfaces">Interfaces</a>
+                        <a href="shop.html?category=headphones">Headphones</a>
+                        <a href="shop.html?category=mixers">Mixers</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="guides.html">Audio Guides</a>
+                        <a href="compare.html">Compare Gear</a>
+                        <a href="warranty.html">Warranty Registration</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="services.html">Services</a>
+                        <a href="#">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="current-year"></span> Resonar Studio. All rights reserved.
+                <p>Disclaimer: Resonar is a demo brand. Products, prices, and reviews are placeholder data.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            const fields = ['c-name', 'c-email', 'c-subject', 'c-message'];
+            
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                const error = el.nextElementSibling;
+                if (!el.value) {
+                    el.classList.add('form-error');
+                    error.style.display = 'block';
+                    isValid = false;
+                } else {
+                    el.classList.remove('form-error');
+                    error.style.display = 'none';
+                    if (id === 'c-email' && !el.value.includes('@')) {
+                        el.classList.add('form-error');
+                        error.style.display = 'block';
+                        isValid = false;
+                    }
+                }
+            });
+
+            if (isValid) {
+                // Demo form submission
+                document.getElementById('c-submitBtn').style.display = 'none';
+                document.getElementById('c-success').style.display = 'block';
+                document.getElementById('contact-form').reset();
+            }
+        });
+    </script>
+</body>
+</html>
