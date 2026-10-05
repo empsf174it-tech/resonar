@@ -38,6 +38,120 @@
             color: var(--color-primary);
         }
 
+        /* Social buttons */
+        .contact-social {
+            margin-top: var(--space-5);
+            padding-top: var(--space-5);
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .contact-social h4 {
+            margin-bottom: var(--space-3);
+        }
+
+        .contact-social-links {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .social-btn {
+            flex: 0 0 44px;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--bg-tertiary);
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .social-btn i {
+            font-size: 1.25rem;
+        }
+
+        .social-btn:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            background-color: rgba(0, 240, 255, 0.08);
+            box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding-top: 0;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .faq-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .faq-item[open] {
+            border-color: rgba(0, 240, 255, 0.4);
+        }
+
+        .faq-item summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '+';
+            flex-shrink: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: var(--color-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item summary:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+            border-radius: var(--radius);
+        }
+
+        .faq-item p {
+            padding: 0 var(--space-4) var(--space-4);
+        }
+
+        .faq-item p a {
+            color: var(--color-primary);
+        }
+
         /* Studio map */
         .map-section {
             margin-bottom: var(--space-9);
@@ -121,6 +235,8 @@
         /* Ensure no overflow at 360px */
         @media (max-width: 360px) {
             .contact-info { padding: var(--space-4); }
+            .faq-item summary { padding: var(--space-3); font-size: 1rem; }
+            .faq-item p { padding: 0 var(--space-3) var(--space-3); }
         }
     </style>
 </head>
@@ -198,11 +314,22 @@
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Please register your product first on the <a href="warranty.html" style="color: var(--color-primary);">Warranty page</a> before filing a claim.</p>
                     </div>
                 </div>
+
+                <div class="contact-social">
+                    <h4>Follow the Studio</h4>
+                    <div class="contact-social-links">
+                        <a href="#" class="social-btn" aria-label="Resonar on Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" class="social-btn" aria-label="Resonar on YouTube"><i class="ph ph-youtube-logo"></i></a>
+                        <a href="#" class="social-btn" aria-label="Resonar on X (Twitter)"><i class="ph ph-x-logo"></i></a>
+                        <a href="#" class="social-btn" aria-label="Resonar on TikTok"><i class="ph ph-tiktok-logo"></i></a>
+                        <a href="#" class="social-btn" aria-label="Resonar on Discord"><i class="ph ph-discord-logo"></i></a>
+                    </div>
+                </div>
             </div>
 
             <div>
                 <form id="contact-form" action="https://formspree.io/f/placeholder" method="POST" novalidate>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                    <div>
                         <div class="form-group">
                             <label class="form-label" for="c-name">Name</label>
                             <input type="text" id="c-name" name="name" class="form-control" required>
@@ -238,6 +365,37 @@
                 </form>
             </div>
 
+        </section>
+
+        <section class="container faq-section">
+            <header class="section-header">
+                <div class="badge badge-primary" style="margin-bottom: var(--space-3);">FAQ</div>
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to the questions our studio team hears most.</p>
+            </header>
+
+            <div class="faq-list">
+                <details class="faq-item" open>
+                    <summary>How long does shipping take?</summary>
+                    <p>Every order ships free with 2-day delivery within the continental US. You'll get a tracking link by email as soon as your gear leaves the studio.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What is your return policy?</summary>
+                    <p>You have 30 days from delivery to return any item in its original condition for a full refund. Just reach out to support and we'll send a prepaid label.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>How do I register my warranty?</summary>
+                    <p>Head to the <a href="warranty.html">Warranty page</a>, enter your product's serial number, and it will appear in your dashboard instantly. All products include a 2-Year Studio Warranty.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I book an in-person demo?</summary>
+                    <p>Yes. Our Williamsburg listening room is open Mon–Fri, 9am – 6pm EST. Send us a message with the "Gear Advice" topic and we'll schedule a time.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can you help me choose the right gear?</summary>
+                    <p>Absolutely. Tell us about your space and use case in the form above, or try our <a href="guides.html">Audio Guides</a> and <a href="compare.html">Compare tool</a> to narrow it down.</p>
+                </details>
+            </div>
         </section>
 
         <section class="container map-section">

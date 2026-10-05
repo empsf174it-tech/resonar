@@ -8,9 +8,100 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
+        .guide-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
         .guide-article {
-            max-width: 800px;
-            margin: 0 auto;
+            min-width: 0;
+        }
+        .guide-article h2,
+        .anc-helper {
+            scroll-margin-top: calc(var(--nav-height) + var(--space-4));
+        }
+
+        /* Sidebar: table of contents + CTA */
+        .guide-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+        .guide-toc,
+        .guide-cta {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: var(--space-4);
+        }
+        .guide-toc h4,
+        .guide-cta h4 {
+            margin-bottom: var(--space-3);
+        }
+        .guide-toc ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        .guide-toc a {
+            display: block;
+            padding-left: var(--space-3);
+            border-left: 2px solid var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            transition: var(--transition);
+        }
+        .guide-toc a:hover {
+            color: var(--color-primary);
+            border-left-color: var(--color-primary);
+        }
+        .guide-cta p {
+            font-size: 0.9375rem;
+            margin-bottom: var(--space-3);
+        }
+        .guide-cta .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        .guide-cta .btn + .btn {
+            margin-top: var(--space-2);
+        }
+
+        /* Desktop & 1024px: left-aligned hero and article with a sticky sidebar */
+        @media (min-width: 992px) {
+            .guide-hero {
+                text-align: left;
+            }
+            .guide-hero::before {
+                left: 0;
+                transform: none;
+            }
+            .guide-hero h1,
+            .guide-hero p {
+                margin-left: 0;
+            }
+            .guide-layout {
+                grid-template-columns: minmax(0, 1fr) 300px;
+                gap: var(--space-7);
+                align-items: start;
+            }
+            .guide-sidebar {
+                position: sticky;
+                top: calc(var(--nav-height) + var(--space-4));
+            }
+        }
+        @media (min-width: 992px) and (max-width: 1100px) {
+            .guide-layout {
+                grid-template-columns: minmax(0, 1fr) 260px;
+                gap: var(--space-5);
+            }
+        }
+        @media (max-width: 991px) {
+            .guide-toc { display: none; }
         }
         .guide-article h2 {
             margin: var(--space-6) 0 var(--space-3);
@@ -109,14 +200,15 @@
 
     <main style="padding-top: var(--nav-height);">
 
-        <section class="container page-hero">
+        <section class="container page-hero guide-hero">
             <div class="badge badge-primary">Audio Demystified</div>
             <h1>The Complete Guide to Noise Cancellation</h1>
             <p>Passive isolation vs. ANC, how each architecture works, and how to pick the right level for where you listen and edit.</p>
         </section>
 
-        <article class="container guide-article" style="margin-bottom: var(--space-8);">
-            
+        <div class="container guide-layout">
+        <article class="guide-article">
+
             <div class="guide-meta">
                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" alt="Sarah Jenkins">
                 <div>
@@ -129,11 +221,11 @@
 
             <p>Whether you're editing a podcast in a busy coffee shop or tracking vocals in a home studio, understanding noise cancellation is critical. But the terminology—Passive, Active, Feedforward, Hybrid—can be overwhelming.</p>
             
-            <h2>Passive Isolation vs. Active Noise Cancellation (ANC)</h2>
+            <h2 id="passive-vs-anc">Passive Isolation vs. Active Noise Cancellation (ANC)</h2>
             <p><strong>Passive Isolation</strong> is just physical blockage. Thick earpads, closed-back designs, and tight clamping force prevent sound waves from entering your ear canal. It works best for high-frequency sounds like people talking or glass clinking.</p>
             <p><strong>Active Noise Cancellation (ANC)</strong> uses microphones to listen to the outside world, then plays an inverted sound wave (anti-noise) into your ears to cancel it out. ANC is highly effective against low-frequency, constant drones like airplane engines or AC units.</p>
 
-            <h2>Types of ANC Architectures</h2>
+            <h2 id="anc-architectures">Types of ANC Architectures</h2>
             <div class="grid-3" style="gap: var(--space-4); margin: var(--space-4) 0;">
                 <div style="background: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius);">
                     <h3 style="font-size: 1.1rem; margin-bottom: var(--space-2); color: var(--color-primary);">Feedforward</h3>
@@ -149,7 +241,7 @@
                 </div>
             </div>
 
-            <div class="anc-helper">
+            <div class="anc-helper" id="anc-finder">
                 <h3>Find Your Perfect ANC Level</h3>
                 <p style="font-size: 1rem; margin-top: 8px;">Where do you do most of your listening or editing?</p>
                 
@@ -165,10 +257,29 @@
                 </div>
             </div>
 
-            <h2>How We Test ANC</h2>
+            <h2 id="how-we-test">How We Test ANC</h2>
             <p>At Resonar, we don't just rely on spec sheets. We test headphones in our A-B studio using a calibrated noise-generator rig. We simulate 85dB of airplane cabin noise, street traffic, and human speech patterns. We then measure the exact decibel reduction at the ear simulator.</p>
-            
+
         </article>
+
+        <aside class="guide-sidebar">
+            <nav class="guide-toc" aria-label="On this page">
+                <h4>On This Page</h4>
+                <ol>
+                    <li><a href="#passive-vs-anc">Passive Isolation vs. ANC</a></li>
+                    <li><a href="#anc-architectures">Types of ANC Architectures</a></li>
+                    <li><a href="#anc-finder">Find Your ANC Level</a></li>
+                    <li><a href="#how-we-test">How We Test ANC</a></li>
+                </ol>
+            </nav>
+            <div class="guide-cta">
+                <h4>Ready to Choose?</h4>
+                <p>Browse our tested headphones or put your shortlist head-to-head.</p>
+                <a href="shop.html?category=headphones" class="btn btn-primary">Shop Headphones</a>
+                <a href="compare.html" class="btn btn-secondary">Compare Gear</a>
+            </div>
+        </aside>
+        </div>
     </main>
 
     <!-- Footer -->

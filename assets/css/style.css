@@ -273,6 +273,22 @@ section {
   }
 }
 
+/* Advantage cards (desktop): share icon / heading / text rows so headings and copy line up across cards */
+@media (min-width: 1025px) {
+  .advantage-grid > div {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: var(--space-2);
+    justify-items: center;
+  }
+
+  .advantage-grid h3 {
+    align-self: center;
+    font-size: 1.5rem;
+  }
+}
+
 /* Three-card sections: 3 across, 2 + centered third on tablet (≤768px), stacked on phones (≤576px) */
 .grid-3 {
   display: grid;
